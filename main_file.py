@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import ttk
+from tkinter import messagebox
 import postgresql_commands
 
 
@@ -43,10 +44,21 @@ def populate_list():
 
 
 def add_item():
+    if first_name.get() == "" or last_name.get() == "" or gender.get() == "" or birth_date.get() == "" or \
+            job.get() == "" or email.get() == "" or salary.get() == "" or hired_date.get() == "" or \
+            warning_strike.get() == "":
+        messagebox.showerror("Required Fields", "Please fill all fields!")
+        return
+    if gender.get().lower() != "female" and gender.get().lower() != "male" and gender.get().lower() != "other":
+        messagebox.showerror("Gender", "Gender options Female, Male and Other")
+        return
+
     postgresql_commands.insert_data(first_name.get(), last_name.get(), gender.get(), birth_date.get(), job.get(),
                                     email.get(), salary.get(), hired_date.get(), warning_strike.get())
+
     database.insert("", END, (first_name.get(), last_name.get(), gender.get(), birth_date.get(), job.get(), email.get(),
                               salary.get(), hired_date.get(), warning_strike.get()))
+
     populate_list()
 
 
@@ -57,6 +69,15 @@ def delete_item():
 
 
 def update_item():
+    if first_name.get() == "" or last_name.get() == "" or gender.get() == "" or birth_date.get() == "" or \
+            job.get() == "" or email.get() == "" or salary.get() == "" or hired_date.get() == "" or \
+            warning_strike.get() == "":
+        messagebox.showerror("Required Fields", "Please fill all fields!")
+        return
+    if gender.get().lower() != "female" and gender.get().lower() != "male" and gender.get().lower() != "other":
+        messagebox.showerror("Gender", "Gender options Female, Male and Other")
+        return
+
     postgresql_commands.update_data(first_name.get(), last_name.get(), gender.get(), birth_date.get(), job.get(),
                                     email.get(), salary.get(), hired_date.get(), warning_strike.get(), item_id)
     clear_item()
@@ -78,11 +99,64 @@ def clear_item():
     warning_strike_entry.delete(0, END)
 
 
+def find_person_name():
+    if search_last_entry.get() == "" or search_last_entry.get() == "":
+        messagebox.showerror("Required fields", "Please fill both First Name and Last Name before the search!")
+        return
+    index = 0
+    database.delete(*database.get_children())
+    for rows in postgresql_commands.search_by_name(search_first_entry.get(), search_last_entry.get()):
+        database.insert("", index, values=rows)
+        index = index + 1
+    search_first_entry.delete(0, END)
+    search_last_entry.delete(0, END)
+
+
+def order_id():
+    index = 0
+    database.delete(*database.get_children())
+    for rows in postgresql_commands.order_by_id():
+        database.insert("", index, values=rows)
+        index = index + 1
+
+
+def order_name():
+    index = 0
+    database.delete(*database.get_children())
+    for rows in postgresql_commands.order_by_name():
+        database.insert("", index, values=rows)
+        index = index + 1
+
+
+def order_salary():
+    index = 0
+    database.delete(*database.get_children())
+    for rows in postgresql_commands.order_by_salary():
+        database.insert("", index, values=rows)
+        index = index + 1
+
+
+def order_job():
+    index = 0
+    database.delete(*database.get_children())
+    for rows in postgresql_commands.order_by_job():
+        database.insert("", index, values=rows)
+        index = index + 1
+
+
+def clear_first(event):
+    search_first_entry.delete(0, END)
+
+
+def clear_last(event):
+    search_last_entry.delete(0, END)
+
+
 # Create window
 app = Tk()
 app.title("Emplpoyees Database")
 app.geometry("1020x650")
-app.resizable(width=FALSE, height=FALSE)
+app.resizable(height=FALSE, width=FALSE)
 
 # Employee info input
 
@@ -93,63 +167,63 @@ person_id_entry = Entry(app, textvariable=person_id, state='readonly')
 person_id_entry.grid(row=0, column=1)
 
 first_name = StringVar()
-first_name_label = Label(app, text='First Name:', pady=20)
+first_name_label = Label(app, text='First Name:')
 first_name_label.grid(row=0, column=2, sticky=W)
 first_name_entry = Entry(app, textvariable=first_name)
 first_name_entry.grid(row=0, column=3)
 
 last_name = StringVar()
-last_name_label = Label(app, text='Last Name:', pady=20)
+last_name_label = Label(app, text='Last Name:')
 last_name_label.grid(row=0, column=4, sticky=W)
 last_name_entry = Entry(app, textvariable=last_name)
-last_name_entry.grid(row=0, column=5, sticky=W)
+last_name_entry.grid(row=0, column=5)
 
 gender = StringVar()
-gender_label = Label(app, text='Gender:', pady=20)
+gender_label = Label(app, text='Gender:')
 gender_label.grid(row=0, column=6, sticky=W)
 gender_entry = Entry(app, textvariable=gender)
 gender_entry.grid(row=0, column=7)
 
 birth_date = StringVar()
-birth_date_label = Label(app, text='Birth date:', pady=20)
+birth_date_label = Label(app, text='Birth date:')
 birth_date_label.grid(row=0, column=8, sticky=W)
 birth_date_entry = Entry(app, textvariable=birth_date)
 birth_date_entry.grid(row=0, column=9)
 
 job = StringVar()
-job_label = Label(app, text='Job:', pady=20)
+job_label = Label(app, text='Job:')
 job_label.grid(row=1, column=0, sticky=W)
 job_entry = Entry(app, textvariable=job)
 job_entry.grid(row=1, column=1)
 
 email = StringVar()
-email_label = Label(app, text='E-mail:', pady=20)
+email_label = Label(app, text='E-mail:')
 email_label.grid(row=1, column=2, sticky=W)
 email_entry = Entry(app, textvariable=email)
 email_entry.grid(row=1, column=3)
 
 salary = StringVar()
-salary_label = Label(app, text='Gross Salary:', pady=20)
+salary_label = Label(app, text='Gross Salary:')
 salary_label.grid(row=1, column=4, sticky=W)
 salary_entry = Entry(app, textvariable=salary)
 salary_entry.grid(row=1, column=5)
 
 hired_date = StringVar()
-hired_date_label = Label(app, text='Hired Date:', pady=20)
+hired_date_label = Label(app, text='Hired Date:')
 hired_date_label.grid(row=1, column=6, sticky=W)
 hired_date_entry = Entry(app, textvariable=hired_date)
 hired_date_entry.grid(row=1, column=7)
 
 warning_strike = StringVar()
-warning_strike_label = Label(app, text='Warning Strike:', pady=20)
+warning_strike_label = Label(app, text='Warning Strike:')
 warning_strike_label.grid(row=1, column=8, sticky=W)
 warning_strike_entry = Entry(app, textvariable=warning_strike)
 warning_strike_entry.grid(row=1, column=9)
 
 # Box tree for data visualization
 
-database = ttk.Treeview(app, height=21)
-database.grid(row=3, column=0, columnspan=11, rowspan=5, padx=15)
+database = ttk.Treeview(app, height=23)
+database.grid(row=3, column=0, columnspan=13, rowspan=5, padx=15, sticky=W)
 database["columns"] = ("id", "First Name", "Last Name", "Gender", "Birth Date", "Job", "E-mail", "Gross Salary",
                        "Hired Date", "Warning Strikes")
 database["show"] = "headings"
@@ -179,7 +253,7 @@ database.column("Warning Strikes", width=85)
 # Scrollbar for the database tree view
 
 database_scrollbar = ttk.Scrollbar(app)
-database_scrollbar.grid(row=3, column=10, sticky="ns", rowspan=5)
+database_scrollbar.grid(row=3, column=10, sticky="ns", rowspan=5, padx=12)
 
 # Set scrollbar to tree view
 
@@ -193,17 +267,54 @@ database.bind("<<TreeviewSelect>>", select_item)
 
 # Buttons
 
-insert_data = Button(app, text='Insert Data', width=12, command=add_item)
-insert_data.grid(row=2, column=0, pady=20, columnspan=12, sticky=W, padx=100)
+insert_data = Button(app, text='Insert Data', width=9, command=add_item)
+insert_data.grid(row=2, column=0, pady=20, columnspan=12, sticky=W, padx=14)
 
-delete_data = Button(app, text='Delete Data', width=12, command=delete_item)
-delete_data.grid(row=2, column=1, columnspan=12, sticky=W, padx=180)
+delete_data = Button(app, text='Delete Data', width=9, command=delete_item)
+delete_data.grid(row=2, column=0, columnspan=12, sticky=W, padx=89)
 
-update_data = Button(app, text='Update Data', width=12, command=update_item)
-update_data.grid(row=2, column=2, columnspan=12, sticky=W, padx=260)
+update_data = Button(app, text='Update Data', width=9, command=update_item)
+update_data.grid(row=2, column=0, columnspan=12, sticky=W, padx=164)
 
-clear_data = Button(app, text='Clear Entries', width=12, command=clear_item)
-clear_data.grid(row=2, column=3, columnspan=12, sticky=W, padx=340)
+clear_data = Button(app, text='Clear Entries', width=9, command=clear_item)
+clear_data.grid(row=2, column=0, columnspan=12, sticky=W, padx=239)
+
+# Order buttons
+order_label = Label(app, text='Ordered by:')
+order_label.grid(row=2, column=7, sticky=W, padx=100, columnspan=40)
+
+ord_id = Button(app, text='ID', width=4, command=order_id)
+ord_id.grid(row=2, column=8, columnspan=12, sticky=W, padx=52)
+
+ord_name = Button(app, text='Name', width=4, command=order_name)
+ord_name.grid(row=2, column=8, columnspan=12, sticky=W, padx=91)
+
+ord_salary = Button(app, text='Salary', width=4, command=order_salary)
+ord_salary.grid(row=2, column=8, columnspan=12, sticky=W, padx=130)
+
+ord_job = Button(app, text='Job', width=4, command=order_job)
+ord_job.grid(row=2, column=9, columnspan=12, sticky=W, padx=80)
+
+# Search button
+
+
+find_label = Label(app, text='Find:')
+find_label.grid(row=2, column=3, columnspan=12, sticky=W, padx=85)
+
+find_first_name = StringVar()
+search_first_entry = Entry(app, textvariable=find_first_name)
+search_first_entry.insert(0, "First Name")
+search_first_entry.grid(row=2, column=3, columnspan=12, sticky=W, padx=120)
+search_first_entry.bind("<Button-1>", clear_first)
+
+find_last_name = StringVar()
+search_last_entry = Entry(app, textvariable=find_last_name)
+search_last_entry.insert(0, "Last Name")
+search_last_entry.grid(row=2, column=5, columnspan=12, sticky=W, padx=60)
+search_last_entry.bind("<Button-1>", clear_last)
+
+search_button = Button(app, text='Search Name', width=10, command=find_person_name)
+search_button.grid(row=2, column=7, columnspan=12, sticky=W)
 
 # Get data from database to insert on the tree view box
 populate_list()
