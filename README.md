@@ -11,11 +11,11 @@ What it does:
               - Delete data.                 - Search employee`s Name.           
               - Sort by ID.                  - Select data rows to edit.
 
-###Requirements
+### Requirements
 
--Python
--Tkinter
--Psycopg2
+- Python
+- Tkinter
+- Psycopg2
 
 ## Getting Started
 
