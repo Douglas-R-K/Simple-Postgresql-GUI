@@ -33,7 +33,7 @@ Add your database name, host, user and password all inside quotes, by default yo
 
 We have two options on how to run it:
  
- 1- The fast way by just opening the main_file.py on your IDE and running it 
+ 1- The fast way is just opening the main_file.py on your IDE and running it 
 (make sure both files are on the same folder).
  
  2- We can use pyinstaller to make a .exe file (this makes it better for 
