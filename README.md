@@ -19,7 +19,7 @@ sql language but you would need to change the adapter and tweak the code).
 
 Install Postgresql here: https://www.postgresql.org/
 
-After finishing your postgre install go to the file postgresql_commands.py and on the first line:
+After finishing your postgre install go to the repository file postgresql_commands.py and on the first line:
    
     conn = psycopg2.connect(dbname='', host='', user='', password='')
    
