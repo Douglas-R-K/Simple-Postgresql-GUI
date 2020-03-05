@@ -9,6 +9,7 @@ def create_table():
                 ' last_name VARCHAR(50), gender VARCHAR(50), birth_date DATE, job VARCHAR(50), email VARCHAR(50), '
                 'salary VARCHAR(50), hired_date DATE, warning_strike INT )')
 
+
 def fetch_data():
     cur.execute('SELECT * FROM employee_id')
     rows = cur.fetchall()

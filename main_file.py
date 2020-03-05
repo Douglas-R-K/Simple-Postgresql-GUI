@@ -58,14 +58,14 @@ def add_item():
 
     database.insert("", END, (first_name.get(), last_name.get(), gender.get(), birth_date.get(), job.get(), email.get(),
                               salary.get(), hired_date.get(), warning_strike.get()))
-
-    populate_list()
+    clear_item()
+    order_id()
 
 
 def delete_item():
     postgresql_commands.remove_data(item_id)
     clear_item()
-    populate_list()
+    order_id()
 
 
 def update_item():
@@ -81,7 +81,7 @@ def update_item():
     postgresql_commands.update_data(first_name.get(), last_name.get(), gender.get(), birth_date.get(), job.get(),
                                     email.get(), salary.get(), hired_date.get(), warning_strike.get(), item_id)
     clear_item()
-    populate_list()
+    order_id()
 
 
 def clear_item():
@@ -317,7 +317,7 @@ search_button = Button(app, text='Search Name', width=10, command=find_person_na
 search_button.grid(row=2, column=7, columnspan=12, sticky=W)
 
 # Get data from database to insert on the tree view box
-populate_list()
+order_id()
 
 # Start the app
 
