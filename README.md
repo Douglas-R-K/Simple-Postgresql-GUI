@@ -24,7 +24,7 @@ sql language but you would need to change the adapter and tweak the code).
 
 Install Postgresql here: https://www.postgresql.org/
 
-After finishing your postgre install go to the file postgresql_commands.py and on the first line:
+After finishing your postgre install go to the repository file postgresql_commands.py and on the first line:
    
     conn = psycopg2.connect(dbname='', host='', user='', password='')
    
@@ -38,7 +38,7 @@ Add your database name, host, user and password all inside quotes, by default yo
 
 We have two options on how to run it:
  
- 1- The fast way by just opening the main_file.py on your IDE and running it 
+ 1- The fast way is just opening the main_file.py on your IDE and running it 
 (make sure both files are on the same folder).
  
  2- We can use pyinstaller to make a .exe file (this makes it better for 
@@ -62,16 +62,39 @@ Here are some examples with what you can do with the GUI:
 
 - Inserting data
 
+![inserting gif](https://user-images.githubusercontent.com/59767617/76035868-54d49980-5f21-11ea-8092-38c70984d106.gif)
+
+
+
 - Deleting data
+
+![delete gif](https://user-images.githubusercontent.com/59767617/76035898-69b12d00-5f21-11ea-83c4-5f7792aa7d18.gif)
+
+
 
 - Updating data
 
+![update gif](https://user-images.githubusercontent.com/59767617/76035926-7df52a00-5f21-11ea-8430-13952f71a55c.gif)
+
+
+
 - Sorting data
+
+
+![sort by gif](https://user-images.githubusercontent.com/59767617/76035955-906f6380-5f21-11ea-9d87-6a81a1e349cb.gif)
+
+
 
 - Search data
 
+
+![search name gif](https://user-images.githubusercontent.com/59767617/76035980-9feeac80-5f21-11ea-93a7-7550a7232c6b.gif)
+
+
+
 - Error box
 
+![Errors gif](https://user-images.githubusercontent.com/59767617/76035990-a41aca00-5f21-11ea-9549-eb41af34c78c.gif)
 
 
 
