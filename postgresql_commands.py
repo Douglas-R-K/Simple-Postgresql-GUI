@@ -5,9 +5,13 @@ cur = conn.cursor()
 
 
 def create_table():
-    cur.execute('CREATE TABLE IF NOT EXISTS employees ( id BIGSERIAL PRIMARY KEY, first_name VARCHAR(50),'
-                ' last_name VARCHAR(50), gender VARCHAR(50), birth_date DATE, job VARCHAR(50), email VARCHAR(50), '
-                'salary VARCHAR(50), hired_date DATE, warning_strike INT )')
+    cur.execute('CREATE TABLE IF NOT EXISTS employee_id ( id BIGSERIAL PRIMARY KEY, first_name VARCHAR(50), '
+                'last_name VARCHAR(50), gender VARCHAR(50), birth_date DATE, job VARCHAR(50), email VARCHAR(50), '
+                'salary VARCHAR(50), hired_date DATE, warning_strike INT );')
+    conn.commit()
+
+
+create_table()
 
 
 def fetch_data():
