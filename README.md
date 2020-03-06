@@ -14,8 +14,9 @@ What it does:
 ### Requirements
 
 - Python
-- Tkinter
-- Psycopg2
+- Tkinter module
+- Psycopg2 module
+- Re module
 
 ## Getting Started
 
